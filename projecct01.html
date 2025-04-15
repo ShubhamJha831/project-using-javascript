@@ -7,13 +7,14 @@
   <style>
     * {
       box-sizing: border-box;
+      margin: 0px;
+      padding: 0px;
     }
-
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-image: url('https://lh3.googleusercontent.com/p/AF1QipNEyZxSwYYpAE-QIj5e0hgNOMLKfMGr2CaF0NUE=s680-w680-h510');
       background-size: cover;
-      background-position: center;
+      background-position: 0%;
       background-repeat: no-repeat;
       margin: 0;
       padding: 40px 20px;
@@ -22,38 +23,32 @@
       align-items: center;
       min-height: 100vh;
     }
-
     .container {
-      background: rgba(255, 255, 255, 0.9); /* translucent white */
+      background: rgba(255, 255, 255, 0.9);
       padding: 40px 30px;
       border-radius: 16px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
       width: 100%;
       max-width: 900px;
     }
-
     .header {
       text-align: center;
       margin-bottom: 30px;
     }
-
     .header img {
       height: 60px;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
-
     .header h2 {
       font-size: 26px;
       color: #333;
       margin-top: 10px;
     }
-
     h3 {
       color: #333;
       margin-top: 40px;
     }
-
     input {
       padding: 12px;
       margin: 10px 0;
@@ -62,7 +57,6 @@
       border-radius: 8px;
       font-size: 16px;
     }
-
     button {
       width: 100%;
       padding: 12px;
@@ -74,32 +68,26 @@
       cursor: pointer;
       margin-top: 10px;
     }
-
     button:hover {
       background-color: #0056b3;
     }
-
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
     }
-
     th, td {
       padding: 12px;
       border: 1px solid #ddd;
       text-align: center;
     }
-
     th {
       background-color: #007BFF;
       color: white;
     }
-
     tr:nth-child(even) {
       background-color: #f9f9f9;
     }
-
     .delete-btn {
       background-color: #dc3545;
       padding: 8px 14px;
@@ -108,7 +96,6 @@
       border: none;
       cursor: pointer;
     }
-
     .delete-btn:hover {
       background-color: #b02a37;
     }
@@ -144,6 +131,8 @@
     <h3>Issue a Book</h3>
     <input type="text" id="issue-isbn" placeholder="Enter ISBN to Issue" />
     <input type="text" id="borrower" placeholder="Borrower's Name" />
+    <input type="date" id="issue-date" />
+    <input type="date" id="return-date" />
     <button onclick="issueBook()">Issue Book</button>
 
     <table>
@@ -151,6 +140,8 @@
         <tr>
           <th>ISBN</th>
           <th>Borrower</th>
+          <th>Issue Date</th>
+          <th>Return Date</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -189,9 +180,11 @@
     function issueBook() {
       const isbn = document.getElementById("issue-isbn").value.trim();
       const borrower = document.getElementById("borrower").value.trim();
+      const issueDate = document.getElementById("issue-date").value;
+      const returnDate = document.getElementById("return-date").value;
 
-      if (!isbn || !borrower) {
-        alert("Please fill in both ISBN and borrower's name.");
+      if (!isbn || !borrower || !issueDate || !returnDate) {
+        alert("Please fill in all issue fields.");
         return;
       }
 
@@ -199,12 +192,16 @@
       row.innerHTML = `
         <td>${isbn}</td>
         <td>${borrower}</td>
+        <td>${issueDate}</td>
+        <td>${returnDate}</td>
         <td><button class="delete-btn" onclick="deleteRow(this)">Return</button></td>
       `;
       issuedList.appendChild(row);
 
       document.getElementById("issue-isbn").value = "";
       document.getElementById("borrower").value = "";
+      document.getElementById("issue-date").value = "";
+      document.getElementById("return-date").value = "";
     }
 
     function deleteRow(btn) {
